@@ -5,19 +5,19 @@ const binanceAPI = require('binance-api-node').default;
 const binanceClient = binanceAPI();
 
 client.on('message', async (message) => {
-  if (message.content.startsWith('!kontrol')) {
+  if (message.content.startsWith('!control')) {
     const args = message.content.split(' ');
     if (args.length === 2) {
-      const coin = args[1].toUpperCase() + 'USDT'; // Kripto paranın adını büyük harflere çevir ve USDT ile birleştir
+      const coin = args[1].toUpperCase() + 'USDT'; // Convert the name of your cryptocurrency to uppercase letters and combine it with USDT
       try {
         const ticker = await binanceClient.dailyStats({ symbol: coin });
         const currentPrice = parseFloat(ticker.lastPrice);
         message.channel.send(`Mevcut fiyatı ${coin}: $${currentPrice}`);
       } catch (error) {
-        message.channel.send('Geçersiz kripto para adı!');
+        message.channel.send('Invalid cryptocurrency name!');
       }
     } else {
-      message.channel.send('Geçersiz komut! Örnek kullanım: !kontrol BTC');
+      message.channel.send('Invalid command! Example usage: !check BTC');
     }
   }
 });
